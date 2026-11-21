@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+*.tmp
+/tmp_spark/
+/bigdata/warehouse/
+/bigdata/lakehouse_data/
+.ipynb_checkpoints/

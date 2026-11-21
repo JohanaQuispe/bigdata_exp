@@ -1,0 +1,269 @@
+{
+  "suite": "Experimentos de Big Data (Apache Spark / Databricks Medallion) — Unity Perú SAC",
+  "motor": "Apache Spark 3.5.3",
+  "fecha_ejecucion": "2026-11-21 21:01:44",
+  "python_version": "3.11.2",
+  "experimentos": [
+    {
+      "id": "EXP-BD-01",
+      "integrante": "Quispe Ruiz, Johana Carolina",
+      "titulo": "Evaluación de formatos de persistencia en la Arquitectura Medallion: CSV vs. JSON vs. Parquet Columnar (Snappy)",
+      "dataset_filas": 106960,
+      "escenarios": [
+        {
+          "escenario": "CSV (Texto plano sin compresión)",
+          "filas": 106960,
+          "tamano_disco_kb": 11983.23,
+          "escritura_ms": 1028.5,
+          "lectura_mediana_ms": 870.31,
+          "lectura_min_ms": 790.76,
+          "lectura_max_ms": 1007.53,
+          "std_ms": 93.53,
+          "tpp_energia_verificado": 3.4456,
+          "reduccion_espacio_pct": 0.0,
+          "speedup_lectura_vs_csv": 1.0
+        },
+        {
+          "escenario": "JSON (Semiestructurado por líneas)",
+          "filas": 106960,
+          "tamano_disco_kb": 45079.8,
+          "escritura_ms": 667.92,
+          "lectura_mediana_ms": 775.89,
+          "lectura_min_ms": 702.9,
+          "lectura_max_ms": 885.43,
+          "std_ms": 70.87,
+          "tpp_energia_verificado": 3.4456,
+          "reduccion_espacio_pct": -276.2,
+          "speedup_lectura_vs_csv": 1.12
+        },
+        {
+          "escenario": "Parquet + Snappy (Columnar Medallion)",
+          "filas": 106960,
+          "tamano_disco_kb": 137.83,
+          "escritura_ms": 928.57,
+          "lectura_mediana_ms": 241.43,
+          "lectura_min_ms": 147.5,
+          "lectura_max_ms": 246.15,
+          "std_ms": 43.25,
+          "tpp_energia_verificado": 3.4456,
+          "reduccion_espacio_pct": 98.8,
+          "speedup_lectura_vs_csv": 3.6
+        }
+      ]
+    },
+    {
+      "id": "EXP-BD-02",
+      "integrante": "Sotelo Espinoza, Leoneld Mathias",
+      "titulo": "Optimización de transformaciones de limpieza y reglas de negocio en Capa Silver: Python UDF vs. Spark SQL vs. Expresiones Nativas Catalyst",
+      "dataset_filas": 160440,
+      "escenarios": [
+        {
+          "escenario": "E1: Python UDF fila a fila (Serialización Py4J / Pickling)",
+          "repeticiones": 5,
+          "mediana_ms": 463.95,
+          "promedio_ms": 468.66,
+          "std_ms": 45.53,
+          "min_ms": 422.45,
+          "max_ms": 542.7,
+          "resultado_verificado": 160440,
+          "throughput_filas_s": 345813.0,
+          "speedup_vs_udf": 1.0
+        },
+        {
+          "escenario": "E2: Consulta declarativa Spark SQL (CASE WHEN + Catalyst)",
+          "repeticiones": 5,
+          "mediana_ms": 201.12,
+          "promedio_ms": 194.44,
+          "std_ms": 18.88,
+          "min_ms": 169.48,
+          "max_ms": 211.2,
+          "resultado_verificado": 160440,
+          "throughput_filas_s": 797733.0,
+          "speedup_vs_udf": 2.31
+        },
+        {
+          "escenario": "E3: API Nativa DataFrames (F.when vectorizado en JVM WholeStageCodegen)",
+          "repeticiones": 5,
+          "mediana_ms": 224.37,
+          "promedio_ms": 218.48,
+          "std_ms": 18.6,
+          "min_ms": 198.98,
+          "max_ms": 242.11,
+          "resultado_verificado": 160440,
+          "throughput_filas_s": 715069.0,
+          "speedup_vs_udf": 2.07
+        }
+      ]
+    },
+    {
+      "id": "EXP-BD-03",
+      "integrante": "Montalvo Abrego, Camila Nadine",
+      "titulo": "Aceleración de consultas interactivas para Dashboards en Databricks y Genie: Parquet Plano vs. Partition Pruning por Mes vs. Caché en Memoria",
+      "dataset_filas": 427840,
+      "consultas_por_rafaga": 4,
+      "escenarios": [
+        {
+          "escenario": "E1: Capa cruda CSV sin particionar ni caché (Full Scan × 4 visuales)",
+          "repeticiones": 5,
+          "mediana_ms": 3654.04,
+          "promedio_ms": 3658.12,
+          "std_ms": 105.42,
+          "min_ms": 3522.65,
+          "max_ms": 3791.13,
+          "resultado_verificado": 33,
+          "speedup_vs_e1": 1.0
+        },
+        {
+          "escenario": "E2: Parquet particionado por `mes` (Partition Pruning mes=9)",
+          "repeticiones": 5,
+          "mediana_ms": 318.74,
+          "promedio_ms": 356.32,
+          "std_ms": 107.19,
+          "min_ms": 285.11,
+          "max_ms": 544.94,
+          "resultado_verificado": 33,
+          "speedup_vs_e1": 11.46
+        },
+        {
+          "escenario": "E3: Partition Pruning + Persistencia MEMORY_AND_DISK (Tabla cacheada)",
+          "repeticiones": 5,
+          "mediana_ms": 251.4,
+          "promedio_ms": 294.63,
+          "std_ms": 108.83,
+          "min_ms": 227.6,
+          "max_ms": 486.64,
+          "resultado_verificado": 33,
+          "speedup_vs_e1": 14.53
+        }
+      ]
+    },
+    {
+      "id": "EXP-BD-04",
+      "integrante": "Arroyo Julca, Mishell Alexandra Belen",
+      "titulo": "Evaluación de escalabilidad masiva del pipeline PySpark ante crecimiento volumétrico (x1 = 31 mil hasta x100 = 3.11 millones de registros)",
+      "escenarios": [
+        {
+          "escenario": "Escala x1 (31,172 registros totales)",
+          "escala": 1,
+          "movimientos_procesados": 5348,
+          "lecturas_iot_procesadas": 25824,
+          "registros_totales": 31172,
+          "mediana_ms": 227.3,
+          "min_ms": 204.88,
+          "max_ms": 281.74,
+          "std_ms": 35.46,
+          "throughput_reg_s": 137140.0,
+          "rotacion_global_verificada": 0.9775
+        },
+        {
+          "escenario": "Escala x10 (311,720 registros totales)",
+          "escala": 10,
+          "movimientos_procesados": 53480,
+          "lecturas_iot_procesadas": 258240,
+          "registros_totales": 311720,
+          "mediana_ms": 191.81,
+          "min_ms": 182.57,
+          "max_ms": 207.87,
+          "std_ms": 10.66,
+          "throughput_reg_s": 1625150.0,
+          "rotacion_global_verificada": 0.9775
+        },
+        {
+          "escenario": "Escala x50 (1,558,600 registros totales)",
+          "escala": 50,
+          "movimientos_procesados": 267400,
+          "lecturas_iot_procesadas": 1291200,
+          "registros_totales": 1558600,
+          "mediana_ms": 234.2,
+          "min_ms": 210.45,
+          "max_ms": 276.9,
+          "std_ms": 28.03,
+          "throughput_reg_s": 6654996.0,
+          "rotacion_global_verificada": 0.9775
+        },
+        {
+          "escenario": "Escala x100 (3,117,200 registros totales)",
+          "escala": 100,
+          "movimientos_procesados": 534800,
+          "lecturas_iot_procesadas": 2582400,
+          "registros_totales": 3117200,
+          "mediana_ms": 235.19,
+          "min_ms": 223.71,
+          "max_ms": 529.99,
+          "std_ms": 149.52,
+          "throughput_reg_s": 13253965.0,
+          "rotacion_global_verificada": 0.9775
+        }
+      ]
+    },
+    {
+      "id": "EXP-BD-05",
+      "integrante": "Cordova Paz, Diego Jason",
+      "titulo": "Optimización de arquitectura de ejecución en Spark: Particiones de Shuffle y BroadcastHashJoin vs. SortMergeJoin en Capa Gold",
+      "dataset_filas": 213920,
+      "escenarios": [
+        {
+          "escenario": "E1: SortMergeJoin + 200 shuffle partitions (Default Spark sin optimizar)",
+          "shuffle_partitions": 200,
+          "aqe_habilitado": false,
+          "estrategia_join": "SortMergeJoin",
+          "repeticiones": 5,
+          "mediana_ms": 3412.89,
+          "promedio_ms": 3402.78,
+          "std_ms": 453.52,
+          "min_ms": 2922.45,
+          "max_ms": 3986.69,
+          "resultado_verificado": 28,
+          "throughput_filas_s": 62680.0,
+          "speedup_vs_default": 1.0
+        },
+        {
+          "escenario": "E2: SortMergeJoin + 64 shuffle partitions (Sobrecarga media de tareas)",
+          "shuffle_partitions": 64,
+          "aqe_habilitado": false,
+          "estrategia_join": "SortMergeJoin",
+          "repeticiones": 5,
+          "mediana_ms": 1214.48,
+          "promedio_ms": 1272.76,
+          "std_ms": 132.61,
+          "min_ms": 1137.34,
+          "max_ms": 1480.06,
+          "resultado_verificado": 28,
+          "throughput_filas_s": 176141.0,
+          "speedup_vs_default": 2.81
+        },
+        {
+          "escenario": "E3: SortMergeJoin + 4 shuffle partitions (Alineado a cores del nodo)",
+          "shuffle_partitions": 4,
+          "aqe_habilitado": false,
+          "estrategia_join": "SortMergeJoin",
+          "repeticiones": 5,
+          "mediana_ms": 440.64,
+          "promedio_ms": 472.79,
+          "std_ms": 82.17,
+          "min_ms": 378.62,
+          "max_ms": 580.61,
+          "resultado_verificado": 28,
+          "throughput_filas_s": 485476.0,
+          "speedup_vs_default": 7.75
+        },
+        {
+          "escenario": "E4: BroadcastHashJoin explícito + AQE activo + 4 particiones (Óptimo)",
+          "shuffle_partitions": 4,
+          "aqe_habilitado": true,
+          "estrategia_join": "BroadcastHashJoin",
+          "repeticiones": 5,
+          "mediana_ms": 184.13,
+          "promedio_ms": 182.5,
+          "std_ms": 11.44,
+          "min_ms": 165.59,
+          "max_ms": 194.81,
+          "resultado_verificado": 28,
+          "throughput_filas_s": 1161788.0,
+          "speedup_vs_default": 18.54
+        }
+      ]
+    }
+  ],
+  "tiempo_total_suite_s": 108.347
+}

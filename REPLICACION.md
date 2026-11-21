@@ -3,7 +3,7 @@
 Este documento permite reconstruir la solución completa en una **computadora distinta**
 a la del equipo original, desde cero y sin ayuda de los autores.
 
-- Tiempo total: **30 a 40 minutos** (la mayor parte es instalar programas).
+- Tiempo variable: instalación y ejecución BI/Big Data pueden requerir varias horas.
 - Si algo falla, ir directo a la sección **12. Problemas frecuentes**.
 - Todos los valores entre **negrita** son los que deben aparecer; si no coinciden, detenerse
   y revisar el paso anterior antes de continuar.
@@ -33,16 +33,17 @@ Al instalar Python, marcar la casilla **"Add python.exe to PATH"** en la primera
 ### Opción A — con Git (recomendada)
 
 ```powershell
-git clone https://github.com/JohanaQuispe/UNITY_PERU_SAC.git
-cd UNITY_PERU_SAC
-git checkout v1.0
+git clone https://github.com/JohanaQuispe/bigdata_exp.git
+cd bigdata_exp
 ```
+
+Si la versión final aún no se publicó en GitHub, utilizar la copia de Arena o la rama del proyecto una vez publicada; el clon predeterminado puede no contener estos entregables.
 
 ### Opción B — sin Git
 
-1. Abrir https://github.com/JohanaQuispe/UNITY_PERU_SAC
+1. Abrir https://github.com/JohanaQuispe/bigdata_exp
 2. Botón verde **Code → Download ZIP**
-4. Descomprimir en una ruta **sin espacios ni tildes**, por ejemplo `C:\proyecto\UNITY_PERU_SAC`
+4. Descomprimir en una ruta **sin espacios ni tildes**, por ejemplo `C:\proyecto\bigdata_exp`
 
    <img width="606" height="615" alt="image" src="https://github.com/user-attachments/assets/a2a6ae0b-87f8-4dd0-a967-15f0f13ff7eb" />
 
@@ -53,7 +54,7 @@ git checkout v1.0
 
 
 > **Todas las instrucciones siguientes se ejecutan desde la raíz de esa carpeta.**
-> En PowerShell, la ruta debe terminar en `\UNITY_PERU_SAC>`.
+> En PowerShell, la ruta debe terminar en `\bigdata_exp>`.
 
 ---
 
@@ -340,7 +341,6 @@ Genera `analisis\salidas\kpis.json` y 14 archivos CSV en `powerbi\respaldo\`.
 | Rotación global | **0.98** |
 | Inversión retenida | **S/ 812 mil** |
 | Cumplimiento del plan | **0.77 %** |
-| Anomalías ambientales | **297** |
 
 Y en las páginas 2 y 3: **0 de 24** componentes bajo el mínimo y **96.55 %** de exactitud.
 
@@ -393,7 +393,7 @@ El procedimiento anterior **es** la demostración: se ejecuta en vivo y se van m
 | 4:30–5:30 | 6 | Mostrar las variables de entorno | "Credenciales fuera del código; carga transaccional y re-ejecutable" |
 | 5:30–7:00 | 9 | 3 consultas en pestañas de SSMS | "5.348 / 3,868701 / ingresos NULL / 3.685 lotes" |
 | 7:00–9:30 | 11 | Las 3 páginas del dashboard + 2 filtros | Una decisión por vista: compras, despachos, proyectos |
-| 9:30–10:00 | — | Volver a este archivo | "Procedimiento ejecutado; versión congelada v1.0" |
+| 9:30–10:00 | — | Volver a este archivo | "Procedimiento ejecutado; versión final por confirmar" |
 
 **Antes de exponer (5 minutos antes):**
 
@@ -414,7 +414,7 @@ Si falla Power BI → mostrar las Figuras 9 a 11 de `evidencias\`, que son las c
 
 - [ ] SQL Server y SSMS instalados
 - [ ] Python 3.10+ con PATH y ODBC Driver 64 bits
-- [ ] Repositorio descargado (tag `v1.0`)
+- [ ] Repositorio descargado (versión final por confirmar)
 - [ ] `scripts\01` ejecutado → base `ALMACEN_ANONIMO`
 - [ ] `scripts\02` ejecutado → **5348** movimientos
 - [ ] `scripts\03` ejecutado → **14** tablas
@@ -426,3 +426,20 @@ Si falla Power BI → mostrar las Figuras 9 a 11 de `evidencias\`, que son las c
 - [ ] Dashboard abierto y actualizado con los 5 KPI correctos
 
 Si las 12 casillas están marcadas, la replicación es exitosa y la demostración puede ejecutarse.
+
+
+## 13. Extensión Big Data y experimentos (2026-11-21)
+
+Los resultados provistos son **locales**, no demuestran despliegue Databricks. Las imágenes BD03/BD04 son maquetas y Genie está pendiente. La guía individual indica capturas pendientes. Evitar sobrescribir los JSON si se desean conservar los tiempos actuales.
+
+```bash
+python -m venv .venv
+# Windows: .venv\Scripts\activate; Linux: source .venv/bin/activate
+pip install -r bigdata/requirements.txt
+python bigdata/pipeline_medallion_spark.py
+python experimentos/bi/ejecutar_experimentos_bi.py
+python experimentos/bigdata/ejecutar_experimentos_bigdata.py
+python analisis/generar_figuras_finales.py
+```
+
+La ejecución local usa Spark 3.5.3, `local[2]`, Parquet y `/tmp/unity_lakehouse`; el script elimina esa carpeta al iniciar. Los experimentos Spark eliminan `/tmp/unity_spark_experimentos`. No guardar datos propios en esas rutas ni ejecutar simultáneamente. Los resultados corresponden al entorno y varían. Para Databricks, clonar la carpeta Git, cargar los CSV/TXT a un Volume, ajustar las rutas del notebook 01 e importar/ejecutar 01–03. En 04 ajustar `REPO` a la ruta absoluta del clon en `/Workspace`, ejecutar preparación y la sección asignada. El script de experimentos usa `/tmp` del driver; usar cómputo de un solo nodo con acceso al filesystem local o adaptar previamente rutas y medición de tamaños para almacenamiento compartido. No está validado en multinodo ni serverless. Requiere privilegios de creación de esquemas y tablas Delta. Los notebooks se probaron localmente con Parquet; Databricks/Delta está pendiente de verificación en un workspace real. Ver `docs/GUIA_CAPTURAS_Y_EXPERIMENTOS_POR_INTEGRANTE.md` para dashboard, Genie y capturas.

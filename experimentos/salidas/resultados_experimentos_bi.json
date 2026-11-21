@@ -1,0 +1,247 @@
+{
+  "suite": "Experimentos de Business Intelligence (BI) — Unity Perú SAC",
+  "fecha_ejecucion": "2026-11-21 21:23:21",
+  "python_version": "3.11.2",
+  "experimentos": [
+    {
+      "id": "EXP-BI-01",
+      "integrante": "Quispe Ruiz, Johana Carolina",
+      "titulo": "Evaluación de latencia analítica: Esquema OLTP Normalizado (3FN) vs. Modelo Estrella vs. Estrella con Índices de Cobertura",
+      "dataset_filas": 26740,
+      "escenarios": [
+        {
+          "escenario": "E1: OLTP Normalizado (3FN, 7 JOINs + cálculo al vuelo)",
+          "repeticiones": 9,
+          "mediana_ms": 56.256,
+          "promedio_ms": 56.416,
+          "std_ms": 0.625,
+          "min_ms": 55.54,
+          "max_ms": 57.727,
+          "resultado_muestra": 126,
+          "tablas_unidas": 8,
+          "speedup_vs_e1": 1.0
+        },
+        {
+          "escenario": "E2: Modelo Estrella Kimball (3 JOINs desnormalizados, sin índices)",
+          "repeticiones": 9,
+          "mediana_ms": 36.379,
+          "promedio_ms": 36.394,
+          "std_ms": 0.496,
+          "min_ms": 35.76,
+          "max_ms": 37.349,
+          "resultado_muestra": 126,
+          "tablas_unidas": 4,
+          "speedup_vs_e1": 1.55
+        },
+        {
+          "escenario": "E3: Modelo Estrella Kimball + Índices de Cobertura en FK",
+          "repeticiones": 9,
+          "mediana_ms": 32.617,
+          "promedio_ms": 33.058,
+          "std_ms": 1.29,
+          "min_ms": 32.535,
+          "max_ms": 36.491,
+          "resultado_muestra": 126,
+          "tablas_unidas": 4,
+          "speedup_vs_e1": 1.72
+        }
+      ]
+    },
+    {
+      "id": "EXP-BI-02",
+      "integrante": "Sotelo Espinoza, Leoneld Mathias",
+      "titulo": "Evaluación de robustez y sensibilidad de las reglas de calidad del ETL ante inyección controlada de anomalías de datos",
+      "escenarios": [
+        {
+          "escenario": "E1: Fuente oficial limpia (0 defectos inyectados)",
+          "registros_entrada": 5348,
+          "registros_validos_cargados": 5348,
+          "registros_rechazados": 0,
+          "rq01_nulos": 0,
+          "rq02_no_positivos": 0,
+          "rq03_sin_producto": 0,
+          "rq04_duplicados": 0,
+          "completitud_lote_pct": 100.0,
+          "precision_deteccion_pct": null,
+          "recobrado_defectos_pct": null,
+          "tpp_post_limpieza": 3.868701,
+          "latencia_validacion_ms": 3.384
+        },
+        {
+          "escenario": "E2: Contaminación moderada (+100 defectos: 25 por regla RQ-01..RQ-04)",
+          "registros_entrada": 5448,
+          "registros_validos_cargados": 5348,
+          "registros_rechazados": 100,
+          "rq01_nulos": 25,
+          "rq02_no_positivos": 25,
+          "rq03_sin_producto": 25,
+          "rq04_duplicados": 25,
+          "completitud_lote_pct": 98.16,
+          "precision_deteccion_pct": 100.0,
+          "recobrado_defectos_pct": 100.0,
+          "tpp_post_limpieza": 3.868701,
+          "latencia_validacion_ms": 9.085
+        },
+        {
+          "escenario": "E3: Contaminación severa (+540 defectos: 135 por regla, ~10% del lote)",
+          "registros_entrada": 5888,
+          "registros_validos_cargados": 5348,
+          "registros_rechazados": 540,
+          "rq01_nulos": 135,
+          "rq02_no_positivos": 135,
+          "rq03_sin_producto": 135,
+          "rq04_duplicados": 135,
+          "completitud_lote_pct": 90.83,
+          "precision_deteccion_pct": 100.0,
+          "recobrado_defectos_pct": 100.0,
+          "tpp_post_limpieza": 3.868701,
+          "latencia_validacion_ms": 20.875
+        }
+      ]
+    },
+    {
+      "id": "EXP-BI-03",
+      "integrante": "Montalvo Abrego, Camila Nadine",
+      "titulo": "Optimización de tiempos de respuesta en medidas del modelo analítico: Iteradores de fila vs. Filtro por banderas booleanas vs. Cubo pre-agregado",
+      "dataset_filas": 53480,
+      "escenarios": [
+        {
+          "escenario": "E1: Iteración fila a fila sobre texto (Patrón FILTER + SUMX no optimizado)",
+          "repeticiones": 3,
+          "mediana_ms": 3090.548,
+          "promedio_ms": 3140.626,
+          "std_ms": 133.992,
+          "min_ms": 3038.886,
+          "max_ms": 3292.445,
+          "resultado_muestra": 0.9775,
+          "cumple_rnf01_3000ms": false,
+          "speedup_vs_e1": 1.0
+        },
+        {
+          "escenario": "E2: Contexto CALCULATE con banderas booleanas en Dim_TipoMovimiento (Implementado)",
+          "repeticiones": 9,
+          "mediana_ms": 4.853,
+          "promedio_ms": 4.884,
+          "std_ms": 0.151,
+          "min_ms": 4.71,
+          "max_ms": 5.172,
+          "resultado_muestra": 0.9775,
+          "cumple_rnf01_3000ms": true,
+          "speedup_vs_e1": 636.8
+        },
+        {
+          "escenario": "E3: Tabla resumen pre-agregada Mes × Categoría (63 celdas OLAP)",
+          "repeticiones": 9,
+          "mediana_ms": 0.133,
+          "promedio_ms": 0.135,
+          "std_ms": 0.01,
+          "min_ms": 0.123,
+          "max_ms": 0.155,
+          "resultado_muestra": 0.9775,
+          "cumple_rnf01_3000ms": true,
+          "speedup_vs_e1": 23237.2
+        }
+      ]
+    },
+    {
+      "id": "EXP-BI-04",
+      "integrante": "Arroyo Julca, Mishell Alexandra Belen",
+      "titulo": "Análisis de escalabilidad progresiva e invarianza de KPIs en el algoritmo de trazabilidad FIFO (x1, x5, x10 y x25)",
+      "escenarios": [
+        {
+          "escenario": "Escala x1 (5,348 movimientos)",
+          "factor": 1,
+          "movimientos": 5348,
+          "mediana_ms": 2.789,
+          "min_ms": 2.726,
+          "max_ms": 2.867,
+          "std_ms": 0.046,
+          "throughput_mov_s": 1917533.0,
+          "tpp_verificado": 3.868733,
+          "rotacion_verificada": 0.9775
+        },
+        {
+          "escenario": "Escala x5 (26,740 movimientos)",
+          "factor": 5,
+          "movimientos": 26740,
+          "mediana_ms": 13.876,
+          "min_ms": 13.745,
+          "max_ms": 13.965,
+          "std_ms": 0.086,
+          "throughput_mov_s": 1927068.0,
+          "tpp_verificado": 3.868733,
+          "rotacion_verificada": 0.9775
+        },
+        {
+          "escenario": "Escala x10 (53,480 movimientos)",
+          "factor": 10,
+          "movimientos": 53480,
+          "mediana_ms": 27.878,
+          "min_ms": 27.522,
+          "max_ms": 28.193,
+          "std_ms": 0.257,
+          "throughput_mov_s": 1918359.0,
+          "tpp_verificado": 3.868733,
+          "rotacion_verificada": 0.9775
+        },
+        {
+          "escenario": "Escala x25 (133,700 movimientos)",
+          "factor": 25,
+          "movimientos": 133700,
+          "mediana_ms": 72.59,
+          "min_ms": 68.715,
+          "max_ms": 76.781,
+          "std_ms": 2.947,
+          "throughput_mov_s": 1841851.0,
+          "tpp_verificado": 3.868733,
+          "rotacion_verificada": 0.9775
+        }
+      ]
+    },
+    {
+      "id": "EXP-BI-05",
+      "integrante": "Cordova Paz, Diego Jason",
+      "titulo": "Optimización de la fase de carga del ETL al Datamart: Autocommit unitario vs. Bloques pandas vs. Carga masiva transaccional (executemany)",
+      "dataset_filas": 5348,
+      "escenarios": [
+        {
+          "escenario": "E1: Inserción unitaria con autocommit por fila (5,348 transacciones)",
+          "repeticiones": 3,
+          "mediana_ms": 4103.16,
+          "promedio_ms": 4126.992,
+          "std_ms": 175.438,
+          "min_ms": 3964.689,
+          "max_ms": 4313.128,
+          "resultado_muestra": 5348,
+          "filas_por_segundo": 1303.0,
+          "speedup_vs_e1": 1.0
+        },
+        {
+          "escenario": "E2: Carga pandas to_sql por lotes (chunksize=500, 1 transacción)",
+          "repeticiones": 7,
+          "mediana_ms": 24.995,
+          "promedio_ms": 25.136,
+          "std_ms": 0.603,
+          "min_ms": 24.426,
+          "max_ms": 26.331,
+          "resultado_muestra": 5348,
+          "filas_por_segundo": 213963.0,
+          "speedup_vs_e1": 164.16
+        },
+        {
+          "escenario": "E3: Carga masiva vectorizada executemany en 1 transacción atómica",
+          "repeticiones": 7,
+          "mediana_ms": 20.972,
+          "promedio_ms": 20.936,
+          "std_ms": 0.478,
+          "min_ms": 20.375,
+          "max_ms": 21.867,
+          "resultado_muestra": 5348,
+          "filas_por_segundo": 255007.0,
+          "speedup_vs_e1": 195.65
+        }
+      ]
+    }
+  ],
+  "tiempo_total_suite_s": 28.131
+}

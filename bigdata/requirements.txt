@@ -1,0 +1,6 @@
+pyspark==3.5.3
+jdk4py<22
+openpyxl>=3.1
+pandas>=2.0
+matplotlib>=3.7
+python-docx>=1.1

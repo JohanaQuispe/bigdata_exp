@@ -1,0 +1,448 @@
+{
+  "motor": "Apache Spark 3.5.3 (PySpark / Arquitectura Medallion)",
+  "fecha_ejecucion": "2026-11-21 20:53:59",
+  "tiempos_s": {
+    "bronze_ingesta": 9.538,
+    "eda_distribuido": 2.306,
+    "silver_limpieza": 4.005,
+    "gold_agregacion": 8.274,
+    "total_pipeline": 28.489
+  },
+  "conteos_bronze": {
+    "bronze_movimientos": 5348,
+    "bronze_productos": 24,
+    "bronze_lotes": 3685,
+    "bronze_plan_demanda": 63,
+    "bronze_sensores": 25824,
+    "bronze_conteos": 72
+  },
+  "conteos_silver": {
+    "silver_productos": 24,
+    "silver_movimientos": 5348,
+    "silver_sensores": 25824,
+    "silver_conteos": 72,
+    "silver_plan_demanda": 63
+  },
+  "conteos_gold": {
+    "gold_kpi_mensual": 9,
+    "gold_kpi_categoria": 7,
+    "gold_stock_componentes": 24,
+    "gold_consumo_proyectos": 3,
+    "gold_telemetria_almacen": 36
+  },
+  "eda": {
+    "describe_movimientos": {
+      "count": {
+        "Cantidad": 5348.0,
+        "Costo_Total": 5348.0,
+        "Dias_Permanencia": 1663.0
+      },
+      "mean": {
+        "Cantidad": 5.7036,
+        "Costo_Total": 15843.91,
+        "Dias_Permanencia": 3.8687
+      },
+      "stddev": {
+        "Cantidad": 3.8331,
+        "Costo_Total": 24671.76,
+        "Dias_Permanencia": 2.5258
+      },
+      "min": {
+        "Cantidad": 1.0,
+        "Costo_Total": 180.0,
+        "Dias_Permanencia": 0.0
+      },
+      "max": {
+        "Cantidad": 16.0,
+        "Costo_Total": 222000.0,
+        "Dias_Permanencia": 20.0
+      }
+    },
+    "describe_sensores": {
+      "count": {
+        "temperatura_c": 25824.0,
+        "humedad_pct": 25824.0
+      },
+      "mean": {
+        "temperatura_c": 21.0485,
+        "humedad_pct": 50.0523
+      },
+      "stddev": {
+        "temperatura_c": 1.3296,
+        "humedad_pct": 4.3492
+      },
+      "min": {
+        "temperatura_c": 17.5,
+        "humedad_pct": 31.8
+      },
+      "max": {
+        "temperatura_c": 30.6,
+        "humedad_pct": 83.1
+      }
+    },
+    "nulos_movimientos": {
+      "Id_Movimiento_NK": 0,
+      "Id_Fecha": 0,
+      "Id_Producto": 0,
+      "Id_TipoMovimiento": 0,
+      "Id_Proyecto": 3685,
+      "Id_Proveedor": 1663,
+      "Cantidad": 0,
+      "Costo_Total": 0,
+      "Dias_Permanencia": 3685
+    },
+    "distribucion_tipos": [
+      {
+        "Codigo": "INGRESO",
+        "Es_Entrada": 1,
+        "Es_Salida_Real": 0,
+        "num_movimientos": 3685,
+        "total_unidades": 15425,
+        "total_costo": 42772640.0
+      },
+      {
+        "Codigo": "SALIDA",
+        "Es_Entrada": 0,
+        "Es_Salida_Real": 1,
+        "num_movimientos": 1663,
+        "total_unidades": 15078,
+        "total_costo": 41960580.0
+      }
+    ],
+    "tramos_permanencia": [
+      {
+        "tramo_permanencia": "INGRESO_LOTE",
+        "movimientos": 3685,
+        "unidades": 15425
+      },
+      {
+        "tramo_permanencia": "NORMAL_4_7D",
+        "movimientos": 844,
+        "unidades": 8706
+      },
+      {
+        "tramo_permanencia": "RAPIDO_0_3D",
+        "movimientos": 665,
+        "unidades": 4743
+      },
+      {
+        "tramo_permanencia": "MODERADO_8_10D",
+        "movimientos": 141,
+        "unidades": 1542
+      },
+      {
+        "tramo_permanencia": "RETENIDO_MAS_10D",
+        "movimientos": 13,
+        "unidades": 87
+      }
+    ]
+  },
+  "kpis_gold_verificados": {
+    "total_movimientos": 5348,
+    "unidades_entradas": 15425,
+    "unidades_salidas": 15078,
+    "costo_entradas": 42772640.0,
+    "costo_salidas": 41960580.0,
+    "tpp_exacto": 3.868701,
+    "tpp_redondeado": 3.87,
+    "rotacion_global": "0.9775",
+    "inversion_retenida": 812060.0,
+    "stock_neto": 347,
+    "exactitud_conteos_pct": 96.55,
+    "componentes_sobre_minimo": "24/24",
+    "conciliacion_bi_bigdata_ok": true
+  },
+  "gold_mensual": [
+    {
+      "anio": 2026,
+      "mes": 1,
+      "unidades_entradas": 1585,
+      "unidades_salidas": 1499,
+      "costo_entradas": 4048140.0,
+      "costo_salidas": 3818590.0,
+      "tpp_dias": 0.61,
+      "num_salidas_fifo": 301,
+      "entradas_plan": 1572,
+      "salidas_plan": 1481,
+      "rotacion_flujo": 0.9457,
+      "balance_neto_mes": 86,
+      "stock_acumulado": 86,
+      "inversion_retenida_mes": 229550.0,
+      "vm_entradas_pct": 0.83,
+      "vm_salidas_pct": 1.22
+    },
+    {
+      "anio": 2026,
+      "mes": 2,
+      "unidades_entradas": 1618,
+      "unidades_salidas": 1524,
+      "costo_entradas": 4246360.0,
+      "costo_salidas": 3993620.0,
+      "tpp_dias": 2.29,
+      "num_salidas_fifo": 200,
+      "entradas_plan": 1629,
+      "salidas_plan": 1541,
+      "rotacion_flujo": 0.9419,
+      "balance_neto_mes": 94,
+      "stock_acumulado": 180,
+      "inversion_retenida_mes": 252740.0,
+      "vm_entradas_pct": -0.68,
+      "vm_salidas_pct": -1.1
+    },
+    {
+      "anio": 2026,
+      "mes": 3,
+      "unidades_entradas": 1772,
+      "unidades_salidas": 1737,
+      "costo_entradas": 4794750.0,
+      "costo_salidas": 4688870.0,
+      "tpp_dias": 3.48,
+      "num_salidas_fifo": 185,
+      "entradas_plan": 1759,
+      "salidas_plan": 1804,
+      "rotacion_flujo": 0.9802,
+      "balance_neto_mes": 35,
+      "stock_acumulado": 215,
+      "inversion_retenida_mes": 105880.0,
+      "vm_entradas_pct": 0.74,
+      "vm_salidas_pct": -3.71
+    },
+    {
+      "anio": 2026,
+      "mes": 4,
+      "unidades_entradas": 1786,
+      "unidades_salidas": 1744,
+      "costo_entradas": 5044140.0,
+      "costo_salidas": 4955990.0,
+      "tpp_dias": 4.07,
+      "num_salidas_fifo": 178,
+      "entradas_plan": 1820,
+      "salidas_plan": 1780,
+      "rotacion_flujo": 0.9765,
+      "balance_neto_mes": 42,
+      "stock_acumulado": 257,
+      "inversion_retenida_mes": 88150.0,
+      "vm_entradas_pct": -1.87,
+      "vm_salidas_pct": -2.02
+    },
+    {
+      "anio": 2026,
+      "mes": 5,
+      "unidades_entradas": 1675,
+      "unidades_salidas": 1635,
+      "costo_entradas": 4745220.0,
+      "costo_salidas": 4696010.0,
+      "tpp_dias": 4.86,
+      "num_salidas_fifo": 157,
+      "entradas_plan": 1662,
+      "salidas_plan": 1661,
+      "rotacion_flujo": 0.9761,
+      "balance_neto_mes": 40,
+      "stock_acumulado": 297,
+      "inversion_retenida_mes": 49210.0,
+      "vm_entradas_pct": 0.78,
+      "vm_salidas_pct": -1.57
+    },
+    {
+      "anio": 2026,
+      "mes": 6,
+      "unidades_entradas": 1728,
+      "unidades_salidas": 1705,
+      "costo_entradas": 4901330.0,
+      "costo_salidas": 4801280.0,
+      "tpp_dias": 5.57,
+      "num_salidas_fifo": 159,
+      "entradas_plan": 1687,
+      "salidas_plan": 1719,
+      "rotacion_flujo": 0.9867,
+      "balance_neto_mes": 23,
+      "stock_acumulado": 320,
+      "inversion_retenida_mes": 100050.0,
+      "vm_entradas_pct": 2.43,
+      "vm_salidas_pct": -0.81
+    },
+    {
+      "anio": 2026,
+      "mes": 7,
+      "unidades_entradas": 1816,
+      "unidades_salidas": 1805,
+      "costo_entradas": 5121400.0,
+      "costo_salidas": 5134510.0,
+      "tpp_dias": 5.73,
+      "num_salidas_fifo": 166,
+      "entradas_plan": 1823,
+      "salidas_plan": 1771,
+      "rotacion_flujo": 0.9939,
+      "balance_neto_mes": 11,
+      "stock_acumulado": 331,
+      "inversion_retenida_mes": -13110.0,
+      "vm_entradas_pct": -0.38,
+      "vm_salidas_pct": 1.92
+    },
+    {
+      "anio": 2026,
+      "mes": 8,
+      "unidades_entradas": 1665,
+      "unidades_salidas": 1658,
+      "costo_entradas": 4778300.0,
+      "costo_salidas": 4795630.0,
+      "tpp_dias": 5.96,
+      "num_salidas_fifo": 154,
+      "entradas_plan": 1638,
+      "salidas_plan": 1685,
+      "rotacion_flujo": 0.9958,
+      "balance_neto_mes": 7,
+      "stock_acumulado": 338,
+      "inversion_retenida_mes": -17330.0,
+      "vm_entradas_pct": 1.65,
+      "vm_salidas_pct": -1.6
+    },
+    {
+      "anio": 2026,
+      "mes": 9,
+      "unidades_entradas": 1780,
+      "unidades_salidas": 1771,
+      "costo_entradas": 5093000.0,
+      "costo_salidas": 5076080.0,
+      "tpp_dias": 5.57,
+      "num_salidas_fifo": 163,
+      "entradas_plan": 1717,
+      "salidas_plan": 1750,
+      "rotacion_flujo": 0.9949,
+      "balance_neto_mes": 9,
+      "stock_acumulado": 347,
+      "inversion_retenida_mes": 16920.0,
+      "vm_entradas_pct": 3.67,
+      "vm_salidas_pct": 1.2
+    }
+  ],
+  "gold_categoria": [
+    {
+      "categoria": "Energía",
+      "num_componentes": 4,
+      "unidades_entradas": 1973,
+      "unidades_salidas": 1941,
+      "costo_entradas": 19271000.0,
+      "costo_salidas": 18963500.0,
+      "tpp_dias": 3.45,
+      "entradas_plan": 1971,
+      "salidas_plan": 1898,
+      "rotacion_flujo": 0.9838,
+      "inversion_retenida": 307500.0,
+      "vm_entradas_pct": 0.1
+    },
+    {
+      "categoria": "Procesamiento",
+      "num_componentes": 2,
+      "unidades_entradas": 1925,
+      "unidades_salidas": 1893,
+      "costo_entradas": 8358100.0,
+      "costo_salidas": 8243700.0,
+      "tpp_dias": 2.92,
+      "entradas_plan": 1876,
+      "salidas_plan": 1935,
+      "rotacion_flujo": 0.9834,
+      "inversion_retenida": 114400.0,
+      "vm_entradas_pct": 2.61
+    },
+    {
+      "categoria": "Almacenamiento",
+      "num_componentes": 4,
+      "unidades_entradas": 2479,
+      "unidades_salidas": 2421,
+      "costo_entradas": 5244950.0,
+      "costo_salidas": 5122150.0,
+      "tpp_dias": 4.05,
+      "entradas_plan": 2442,
+      "salidas_plan": 2496,
+      "rotacion_flujo": 0.9766,
+      "inversion_retenida": 122800.0,
+      "vm_entradas_pct": 1.52
+    },
+    {
+      "categoria": "Infraestructura",
+      "num_componentes": 5,
+      "unidades_entradas": 2428,
+      "unidades_salidas": 2365,
+      "costo_entradas": 3916150.0,
+      "costo_salidas": 3796300.0,
+      "tpp_dias": 4.47,
+      "entradas_plan": 2470,
+      "salidas_plan": 2368,
+      "rotacion_flujo": 0.9741,
+      "inversion_retenida": 119850.0,
+      "vm_entradas_pct": -1.7
+    },
+    {
+      "categoria": "Redes",
+      "num_componentes": 3,
+      "unidades_entradas": 2212,
+      "unidades_salidas": 2154,
+      "costo_entradas": 2443030.0,
+      "costo_salidas": 2382450.0,
+      "tpp_dias": 4.0,
+      "entradas_plan": 2234,
+      "salidas_plan": 2189,
+      "rotacion_flujo": 0.9738,
+      "inversion_retenida": 60580.0,
+      "vm_entradas_pct": -0.98
+    },
+    {
+      "categoria": "Memoria",
+      "num_componentes": 3,
+      "unidades_entradas": 2187,
+      "unidades_salidas": 2131,
+      "costo_entradas": 2408320.0,
+      "costo_salidas": 2347130.0,
+      "tpp_dias": 4.44,
+      "entradas_plan": 2122,
+      "salidas_plan": 2134,
+      "rotacion_flujo": 0.9744,
+      "inversion_retenida": 61190.0,
+      "vm_entradas_pct": 3.06
+    },
+    {
+      "categoria": "Refrigeración",
+      "num_componentes": 3,
+      "unidades_entradas": 2221,
+      "unidades_salidas": 2173,
+      "costo_entradas": 1131090.0,
+      "costo_salidas": 1105350.0,
+      "tpp_dias": 3.61,
+      "entradas_plan": 2192,
+      "salidas_plan": 2172,
+      "rotacion_flujo": 0.9784,
+      "inversion_retenida": 25740.0,
+      "vm_entradas_pct": 1.32
+    }
+  ],
+  "gold_proyectos": [
+    {
+      "codigo_proyecto": "PRY001",
+      "nombre_proyecto": "Mantenimiento preventivo Data Center Norte",
+      "num_despachos": 555,
+      "unidades_consumidas": 5126,
+      "costo_consumido": 13847470.0,
+      "tpp_despacho_dias": 3.84,
+      "componentes_distintos": 24
+    },
+    {
+      "codigo_proyecto": "PRY004",
+      "nombre_proyecto": "Mantenimiento de infraestructura eléctrica",
+      "num_despachos": 554,
+      "unidades_consumidas": 5001,
+      "costo_consumido": 14512900.0,
+      "tpp_despacho_dias": 3.95,
+      "componentes_distintos": 24
+    },
+    {
+      "codigo_proyecto": "PRY003",
+      "nombre_proyecto": "Renovación de servidores críticos",
+      "num_despachos": 554,
+      "unidades_consumidas": 4951,
+      "costo_consumido": 13600210.0,
+      "tpp_despacho_dias": 3.81,
+      "componentes_distintos": 24
+    }
+  ]
+}
