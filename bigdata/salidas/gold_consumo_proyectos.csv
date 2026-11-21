@@ -1,0 +1,4 @@
+﻿codigo_proyecto,nombre_proyecto,num_despachos,unidades_consumidas,costo_consumido,tpp_despacho_dias,componentes_distintos
+PRY001,Mantenimiento preventivo Data Center Norte,555,5126,13847470.0,3.84,24
+PRY004,Mantenimiento de infraestructura eléctrica,554,5001,14512900.0,3.95,24
+PRY003,Renovación de servidores críticos,554,4951,13600210.0,3.81,24

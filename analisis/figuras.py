@@ -128,8 +128,8 @@ def fig01():
     ax.add_patch(FancyBboxPatch((2, 2.6), 96.4, 8.2, boxstyle="round,pad=0.006,rounding_size=0.03",
                                 linewidth=1.1, edgecolor=AMBAR, facecolor="#FFF8E6", zorder=1))
     ax.text(3.4, 9.0, "Límite de alcance", fontsize=8.6, fontweight="bold", color="#8A5A00")
-    ax.text(3.4, 7.0, "Solución de Big Data (PySpark/Databricks): evaluada y descartada para esta entrega por decisión del docente;\n"
-                      "se documenta como trabajo futuro (§3.5 y §7.3). La solución entregada es exclusivamente de BI, con carga batch diaria.",
+    ax.text(3.4, 7.0, "Esta figura representa únicamente el carril de BI. La arquitectura integrada final incluye Big Data;\n"
+                      "ver fig01_arquitectura_integrada.png. Despliegue Databricks y Genie pendientes de validación.",
             fontsize=7.3, color="#6B4B00", linespacing=1.5)
     guardar(fig, "fig01_arquitectura.png")
 
@@ -322,48 +322,6 @@ def fig06():
 
 
 # ------------------------------------------ Fig 7: anomalías ambientales
-def fig07():
-    import csv
-    filas = list(csv.DictReader(open(RAIZ / "powerbi" / "respaldo" / "stg_Sensores.csv",
-                                     encoding="utf-8-sig"), delimiter=";"))
-    s = K["serie_mensual"]
-    meses = [int(m) for m in sorted(s, key=int)]
-    anom = [s[str(m)]["anomalias"] for m in meses]
-    lect = [s[str(m)]["lecturas"] for m in meses]
-
-    fig, (a1, a2) = plt.subplots(1, 2, figsize=(10.4, 3.7),
-                                 gridspec_kw={"width_ratios": [1.15, 1]})
-    x = np.arange(len(meses))
-    a1.bar(x, lect, 0.62, color="#E4EBF2", label="Lecturas válidas")
-    a1.bar(x, anom, 0.62, color=ROJO, label="Anomalías")
-    for xi, v in zip(x, anom):
-        if v:
-            a1.text(xi, max(lect) * 0.055 + v, f"{v}", ha="center", fontsize=6.5, color=ROJO)
-    a1.set_xticks(x); a1.set_xticklabels(MESES[:len(meses)])
-    a1.set_ylabel("Lecturas por mes")
-    a1.set_title("Lecturas de sensores y anomalías por mes", loc="left")
-    a1.legend(frameon=False, fontsize=7.4, loc="upper center")
-    a1.spines[["top", "right"]].set_visible(False)
-    a1.text(0, -0.24, "297 de 25,824 lecturas fuera de rango (1.15 %).\nSe concentran en marzo (125) y julio (104).",
-            transform=a1.transAxes, fontsize=7, color=GRIS)
-
-    t = [float(f["Temperatura"]) for f in filas]
-    h = [float(f["Humedad"]) for f in filas]
-    a = [f["Es_Anomalia"] == "1" for f in filas]
-    a2.scatter([ti for ti, ai in zip(t, a) if not ai], [hi for hi, ai in zip(h, a) if not ai],
-               s=2, color=CELESTE, alpha=0.5, label="En rango")
-    a2.scatter([ti for ti, ai in zip(t, a) if ai], [hi for hi, ai in zip(h, a) if ai],
-               s=6, color=ROJO, alpha=0.85, label="Anomalía")
-    a2.axvspan(18, 27, color=VERDE, alpha=0.08)
-    a2.axhspan(40, 60, color=AZUL2, alpha=0.07)
-    a2.set_xlabel("Temperatura (°C)"); a2.set_ylabel("Humedad relativa (%)")
-    a2.set_title("Rango operativo: 18–27 °C y 40–60 % HR", loc="left")
-    a2.legend(frameon=False, fontsize=7.4, markerscale=3)
-    a2.spines[["top", "right"]].set_visible(False)
-    guardar(fig, "fig07_anomalias_ambiente.png")
-
-
-# ------------------------------------ Fig 8: rotación y valor por categoría
 def fig08():
     c = K["serie_categoria"]
     cats = list(c.keys())
@@ -613,6 +571,6 @@ def fig11():
 
 if __name__ == "__main__":
     print("Generando figuras en", EVID)
-    for f in (fig01, fig02, fig03, fig04, fig05, fig06, fig07, fig08, fig09, fig10, fig11):
+    for f in (fig01, fig02, fig03, fig04, fig05, fig06, fig08, fig09, fig10, fig11):
         f()
     print("Listo.")
